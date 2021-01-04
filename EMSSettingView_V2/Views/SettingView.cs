@@ -189,6 +189,70 @@ namespace EMSSettingView_V2.Views
                 comboBoxEdits4.Add(comboBoxEdit4);
             }
             #endregion
+            #region 抓取原先設定
+            #region 上層資料
+            ComtoggleSwitch.IsOn = gateWay.ControlFlag;
+            RecordtoggleSwitch.IsOn = gateWay.RecordFlag;
+            if (gateWay.GateWays[0].GatewayEnumType == 0)
+            {
+                labelControl4.Visible = true;
+                labelControl22.Visible = true;
+                ComPortcomboBoxEdit.Visible = true;
+                RTURatetextEdit.Visible = true;
+                ComcomboBoxEdit.SelectedIndex = 0;
+                ComPortcomboBoxEdit.Text = gateWay.GateWays[0].ModbusRTULocation;
+                RTURatetextEdit.Text = Convert.ToString(gateWay.GateWays[0].ModbusRTURate);
+            }
+            else if (gateWay.GateWays[0].GatewayEnumType == 1)
+            {
+                labelControl19.Visible = true;
+                labelControl21.Visible = true;
+                ComTCPtextEdit.Visible = true;
+                RatetextEdit.Visible = true;
+                ComcomboBoxEdit.SelectedIndex = 1;
+                ComTCPtextEdit.Text = gateWay.GateWays[0].ModbusTCPLocation;
+                RatetextEdit.Text = Convert.ToString(gateWay.GateWays[0].ModbusTCPRate);
+            }
+            else if (gateWay.GateWays[0].GatewayEnumType == 2)
+            {
+                labelControl20.Visible = true;
+                HTTPtextEdit.Visible = true;
+                ComcomboBoxEdit.SelectedIndex = 2;
+                HTTPtextEdit.Text = gateWay.GateWays[0].APILocation;
+            }
+            else if (gateWay.GateWays[0].GatewayEnumType == 3)
+            {
+                labelControl19.Visible = true;
+                labelControl21.Visible = true;
+                ComTCPtextEdit.Visible = true;
+                RatetextEdit.Visible = true;
+                ComcomboBoxEdit.SelectedIndex = 3;
+                ComTCPtextEdit.Text = gateWay.GateWays[0].EMSLocation;
+                RatetextEdit.Text = Convert.ToString(gateWay.GateWays[0].EMSRate);
+            }
+            #endregion
+            #region 天氣
+            ATMtextEdit.Text = gateWay.GateWays[0].Authorization;
+            CitycomboBoxEdit.Text = gateWay.GateWays[0].LocationName;
+            ZonecomboBoxEdit.Text = gateWay.GateWays[0].DistrictName;
+            DeviceTypecomboBoxEdit.SelectedIndex = gateWay.GateWays[0].GateWaySenserIDs[0].SenserEnumType;
+            DeviceNametextEdit.Text = gateWay.GateWays[0].GateWaySenserIDs[0].DeviceName;
+            IDspinEdit.Text = Convert.ToString(gateWay.GateWays[0].GateWaySenserIDs[0].DeviceID);
+            #endregion
+            #region 電表
+            for (int i = 0; i < gateWay.GateWays[0].GateWayElectricIDs.Count; i++)
+            {
+                toggleSwitches[i].IsOn = true;
+                textEdits[i].Text = gateWay.GateWays[0].GateWayElectricIDs[i].DeviceName;
+                spinEdits[i].Text = Convert.ToString(gateWay.GateWays[0].GateWayElectricIDs[i].DeviceID);
+                comboBoxEdits[i].SelectedIndex = gateWay.GateWays[0].GateWayElectricIDs[i].ElectricEnumType;
+                comboBoxEdits2[i].SelectedIndex = gateWay.GateWays[0].GateWayElectricIDs[i].PhaseEnumType;
+                comboBoxEdits3[i].SelectedIndex = gateWay.GateWays[0].GateWayElectricIDs[i].LoopEnumType;
+                comboBoxEdits4[i].SelectedIndex = gateWay.GateWays[0].GateWayElectricIDs[i].PhaseAngleEnumType;
+                toggleSwitches2[i].IsOn = gateWay.GateWays[0].GateWayElectricIDs[i].TotalMeterFlag;
+            }
+            #endregion
+            #endregion
         }
 
         private void ComboBoxEdit1_SelectedIndexChanged(object sender, EventArgs e)
@@ -196,6 +260,9 @@ namespace EMSSettingView_V2.Views
             #region 僅三相表邏輯
             DevExpress.XtraEditors.ComboBoxEdit comboBox = (DevExpress.XtraEditors.ComboBoxEdit)sender;
             int Index = Convert.ToInt32(comboBox.Tag);
+            comboBoxEdits2[Index].Enabled = true;
+            comboBoxEdits3[Index].Enabled = true;
+            comboBoxEdits4[Index].Enabled = true;
             if (comboBox.Text == "ABBM2M")
             {
                 comboBoxEdits2[Index].SelectedIndex = 0;
@@ -214,6 +281,8 @@ namespace EMSSettingView_V2.Views
             #region 單三相表邏輯
             DevExpress.XtraEditors.ComboBoxEdit comboBox = (DevExpress.XtraEditors.ComboBoxEdit)sender;
             int Index = Convert.ToInt32(comboBox.Tag);
+            comboBoxEdits3[Index].Enabled = true;
+            comboBoxEdits4[Index].Enabled = true;
             if (comboBox.Text == "三相")
             {
                 if (comboBoxEdits[Index].Text == "PA60")
@@ -258,6 +327,7 @@ namespace EMSSettingView_V2.Views
         {
             #region 寫入Json資料
             #region 寫入上層資訊進Json
+            int j = 0;
             gateWay.ControlFlag = ComtoggleSwitch.IsOn;
             gateWay.RecordFlag = RecordtoggleSwitch.IsOn;
             if (ComcomboBoxEdit.SelectedIndex == 0)
@@ -294,13 +364,13 @@ namespace EMSSettingView_V2.Views
             gateWay.GateWays[0].WeatherTypeEnum = Convert.ToInt32(CitycomboBoxEdit.SelectedIndex);
             gateWay.GateWays[0].DistrictName = ZonecomboBoxEdit.Text;
             gateWay.GateWays[0].GateWaySenserIDs[0].DeviceID = Convert.ToByte(IDspinEdit.Text);
-            gateWay.GateWays[0].GateWaySenserIDs[0].DeviceIndex = (Convert.ToByte(IDspinEdit.Text) - 1);
+            gateWay.GateWays[0].GateWaySenserIDs[0].DeviceIndex = j; j += 1;
             gateWay.GateWays[0].GateWaySenserIDs[0].SenserEnumType = Convert.ToInt32(DeviceTypecomboBoxEdit.SelectedIndex);
             gateWay.GateWays[0].GateWaySenserIDs[0].DeviceName = DeviceNametextEdit.Text;
             #endregion
             #region 寫入電錶項目進Json
             gateWay.GateWays[0].GateWayElectricIDs.Clear();
-            int j = 1;
+            
             for (int i = 0; i < toggleSwitches.Count; i++)
             {
                 if (toggleSwitches[i].IsOn == true)
@@ -314,6 +384,24 @@ namespace EMSSettingView_V2.Views
             string output = JsonConvert.SerializeObject(gateWay, Formatting.Indented, new JsonSerializerSettings());
             File.WriteAllText(setFile, output, Encoding.UTF8);
             MessageBox.Show("儲存成功!!");
+            #region 儲存後清空沒用到的欄位
+            for (int i = 0; i < 30; i++)
+            {
+                if (toggleSwitches[i].IsOn == false)
+                {
+                    textEdits[i].Text = "";
+                    spinEdits[i].Text = "";
+                    comboBoxEdits[i].SelectedIndex = -1;
+                    comboBoxEdits2[i].SelectedIndex = -1;
+                    comboBoxEdits3[i].SelectedIndex = -1;
+                    comboBoxEdits4[i].SelectedIndex = -1;
+                    comboBoxEdits2[i].Enabled = true;
+                    comboBoxEdits3[i].Enabled = true;
+                    comboBoxEdits4[i].Enabled = true;
+                    toggleSwitches2[i].IsOn = false;
+                }
+            }
+            #endregion
             #endregion
         }
         private void CitycomboBoxEdit_SelectedIndexChanged(object sender, EventArgs e)
