@@ -165,6 +165,7 @@ namespace EMSSettingView_V2.Views
             "ModbusTCP",
             "API",
             "EMS"});
+            this.ComcomboBoxEdit.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
             this.ComcomboBoxEdit.Size = new System.Drawing.Size(139, 26);
             this.ComcomboBoxEdit.TabIndex = 5;
             this.ComcomboBoxEdit.SelectedIndexChanged += new System.EventHandler(this.ComcomboBoxEdit_SelectedIndexChanged);
@@ -192,6 +193,7 @@ namespace EMSSettingView_V2.Views
             this.ComPortcomboBoxEdit.Properties.AutoComplete = false;
             this.ComPortcomboBoxEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.ComPortcomboBoxEdit.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
             this.ComPortcomboBoxEdit.Size = new System.Drawing.Size(139, 26);
             this.ComPortcomboBoxEdit.TabIndex = 7;
             this.ComPortcomboBoxEdit.Visible = false;
@@ -291,6 +293,7 @@ namespace EMSSettingView_V2.Views
             "溫溼度感測器(黑)",
             "溫溼度感測器(白)",
             "氣象局API"});
+            this.DeviceTypecomboBoxEdit.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
             this.DeviceTypecomboBoxEdit.Size = new System.Drawing.Size(152, 26);
             this.DeviceTypecomboBoxEdit.TabIndex = 11;
             this.DeviceTypecomboBoxEdit.SelectedIndexChanged += new System.EventHandler(this.DeviceTypecomboBoxEdit_SelectedIndexChanged);
@@ -306,6 +309,7 @@ namespace EMSSettingView_V2.Views
             this.ZonecomboBoxEdit.Properties.Appearance.Options.UseFont = true;
             this.ZonecomboBoxEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.ZonecomboBoxEdit.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
             this.ZonecomboBoxEdit.Size = new System.Drawing.Size(152, 26);
             this.ZonecomboBoxEdit.TabIndex = 10;
             // 
@@ -342,6 +346,7 @@ namespace EMSSettingView_V2.Views
             "澎湖縣",
             "金門縣",
             "連江縣"});
+            this.CitycomboBoxEdit.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
             this.CitycomboBoxEdit.Size = new System.Drawing.Size(152, 26);
             this.CitycomboBoxEdit.TabIndex = 9;
             this.CitycomboBoxEdit.SelectedIndexChanged += new System.EventHandler(this.CitycomboBoxEdit_SelectedIndexChanged);
@@ -620,6 +625,7 @@ namespace EMSSettingView_V2.Views
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.ComcomboBoxEdit);
             this.Controls.Add(this.RTURatetextEdit);
             this.Controls.Add(this.labelControl22);
             this.Controls.Add(this.RatetextEdit);
@@ -636,7 +642,6 @@ namespace EMSSettingView_V2.Views
             this.Controls.Add(this.labelControl5);
             this.Controls.Add(this.ComPortcomboBoxEdit);
             this.Controls.Add(this.labelControl4);
-            this.Controls.Add(this.ComcomboBoxEdit);
             this.Controls.Add(this.labelControl3);
             this.Controls.Add(this.labelControl2);
             this.Controls.Add(this.labelControl1);

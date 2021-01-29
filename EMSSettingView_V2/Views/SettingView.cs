@@ -193,6 +193,7 @@ namespace EMSSettingView_V2.Views
             #region 上層資料
             ComtoggleSwitch.IsOn = gateWay.ControlFlag;
             RecordtoggleSwitch.IsOn = gateWay.RecordFlag;
+            ATMtextEdit.Text = gateWay.GateWays[0].Authorization;
             if (gateWay.GateWays[0].GatewayEnumType == 0)
             {
                 labelControl4.Visible = true;
@@ -356,10 +357,7 @@ namespace EMSSettingView_V2.Views
 
             #endregion
             #region 寫入天氣感測器資訊進Json
-            if (ATMtextEdit.Text == null)
-            {
-                gateWay.GateWays[0].Authorization = ATMtextEdit.Text;
-            }
+            gateWay.GateWays[0].Authorization = ATMtextEdit.Text;
             gateWay.GateWays[0].LocationName = CitycomboBoxEdit.Text;
             gateWay.GateWays[0].WeatherTypeEnum = Convert.ToInt32(CitycomboBoxEdit.SelectedIndex);
             gateWay.GateWays[0].DistrictName = ZonecomboBoxEdit.Text;
